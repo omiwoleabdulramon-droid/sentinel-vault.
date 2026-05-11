@@ -3,60 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGICSTACK | SENTINEL V4.0 BRAIN</title>
+    <title>LOGICSTACK | SENTINEL V4.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #050505; color: #e5e5e5; font-family: 'Inter', sans-serif; }
         .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f9e27d 50%, #b8860b 100%); }
         .glass-card { background: rgba(20, 20, 20, 0.8); border: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px); }
-        .log-entry { border-left: 2px solid #d4af37; background: rgba(255,255,255,0.03); }
+        .log-entry { border-left: 2px solid #d4af37; background: rgba(255,255,255,0.03); margin-bottom: 8px; padding: 12px; border-radius: 0 12px 12px 0; }
+        .terminal-font { font-family: 'Courier New', Courier, monospace; }
     </style>
 </head>
-<body class="p-4 pb-20 min-h-screen">
+<body class="p-4 pb-24 min-h-screen">
     <div class="max-w-xl mx-auto space-y-6">
         
         <div class="flex justify-between items-center border-b border-yellow-900/30 pb-4">
-            <h1 class="text-[10px] tracking-[0.3em] text-yellow-500 font-bold uppercase">LogicStack Brain V4.0</h1>
-            <div class="px-3 py-1 rounded border border-yellow-600/30 text-[10px] text-yellow-600 font-bold uppercase">Intelligence Active</div>
+            <div>
+                <h1 class="text-[10px] tracking-[0.3em] text-yellow-500 font-bold uppercase terminal-font">LogicStack Brain</h1>
+                <p class="text-xl font-light italic text-white">Sentinel <span class="font-bold not-italic">V4.1 Intelligence</span></p>
+            </div>
+            <div class="px-3 py-1 rounded border border-yellow-600/30 text-[10px] text-yellow-600 font-bold">CORE ACTIVE</div>
         </div>
 
         <div class="glass-card p-5 rounded-2xl space-y-4">
-            <label class="text-[9px] uppercase text-yellow-600 font-bold">Paste Full Lead Details (Name, Addr, Phone, Email)</label>
-            <textarea id="rawInput" rows="4" class="w-full bg-black/40 border border-white/5 rounded-xl p-4 text-sm focus:outline-none focus:border-yellow-600 text-white" placeholder="Example: John Doe, 123 Main St, 555-0199, john@mail.com"></textarea>
+            <div class="flex justify-between items-center px-1">
+                <label class="text-[9px] uppercase text-yellow-600 font-bold tracking-widest">Universal Lead Intake</label>
+                <span class="text-[8px] text-zinc-600 font-bold">AUTO-PARSING ON</span>
+            </div>
+            <textarea id="rawInput" rows="4" class="w-full bg-black/40 border border-white/5 rounded-xl p-4 text-sm focus:outline-none focus:border-yellow-600 transition-all text-white" placeholder="Paste everything here: Name, Address, Phone, Email..."></textarea>
             
             <div class="grid grid-cols-3 gap-2">
-                <button onclick="setMode('whatsapp')" id="btn-whatsapp" class="text-[9px] py-2 rounded-lg border border-yellow-600/50 bg-yellow-950/20 text-yellow-500 font-bold">WHATSAPP</button>
-                <button onclick="setMode('sms')" id="btn-sms" class="text-[9px] py-2 rounded-lg border border-white/10 bg-white/5 text-gray-500 font-bold opacity-60">SMS</button>
-                <button onclick="setMode('email')" id="btn-email" class="text-[9px] py-2 rounded-lg border border-white/10 bg-white/5 text-gray-500 font-bold opacity-60">EMAIL</button>
+                <button onclick="setMode('whatsapp')" id="btn-whatsapp" class="text-[9px] py-2 rounded-lg border border-yellow-600/50 bg-yellow-950/20 text-yellow-500 font-bold transition-all">WHATSAPP</button>
+                <button onclick="setMode('sms')" id="btn-sms" class="text-[9px] py-2 rounded-lg border border-white/10 bg-white/5 text-gray-500 font-bold opacity-60 hover:opacity-100">SMS</button>
+                <button onclick="setMode('email')" id="btn-email" class="text-[9px] py-2 rounded-lg border border-white/10 bg-white/5 text-gray-500 font-bold opacity-60 hover:opacity-100">EMAIL</button>
             </div>
         </div>
 
         <div class="glass-card p-6 rounded-3xl space-y-6">
-            <div class="grid grid-cols-2 gap-4 text-left">
-                <div>
-                    <p class="text-[8px] text-zinc-500 uppercase font-bold">Detected Phone</p>
-                    <p id="dispPhone" class="text-lg font-mono text-white">---</p>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <p class="text-[8px] text-zinc-500 uppercase font-black">Detected Phone</p>
+                    <p id="dispPhone" class="text-lg font-mono text-white tracking-tighter">---</p>
                 </div>
-                <div>
-                    <p class="text-[8px] text-zinc-500 uppercase font-bold">Detected Email</p>
-                    <p id="dispEmail" class="text-[10px] font-mono text-white truncate">---</p>
+                <div class="space-y-1">
+                    <p class="text-[8px] text-zinc-500 uppercase font-black">Detected Email</p>
+                    <p id="dispEmail" class="text-[10px] font-mono text-zinc-300 truncate">---</p>
                 </div>
             </div>
 
-            <button onclick="executeHandshake()" class="gold-gradient w-full py-5 rounded-2xl text-black font-black uppercase tracking-[0.2em] text-xs active:scale-95 transition-all">Initiate Handshake</button>
+            <button onclick="executeHandshake()" class="gold-gradient w-full py-5 rounded-2xl text-black font-black uppercase tracking-[0.2em] text-xs shadow-xl active:scale-95 transition-all">
+                Initiate Handshake
+            </button>
             
             <div class="grid grid-cols-2 gap-3">
-                <button onclick="searchProperty()" class="border border-blue-500 text-blue-500 py-3 rounded-xl text-[9px] font-bold uppercase">Search Property</button>
-                <button onclick="searchOwner()" class="border border-zinc-700 text-zinc-400 py-3 rounded-xl text-[9px] font-bold uppercase">Search Owner</button>
+                <button onclick="searchProperty()" class="border border-blue-500/50 text-blue-400 py-3 rounded-xl text-[9px] font-bold uppercase hover:bg-blue-500/10">Search Property</button>
+                <button onclick="searchOwner()" class="border border-zinc-700 text-zinc-500 py-3 rounded-xl text-[9px] font-bold uppercase hover:text-zinc-300">Verify Owner</button>
             </div>
         </div>
 
-        <div class="space-y-3">
-            <h3 class="text-[10px] text-zinc-500 uppercase font-bold tracking-widest px-2">Contact History</h3>
-            <div id="historyLog" class="space-y-2">
-                <p class="text-[9px] text-zinc-700 italic px-2">No contacts recorded yet...</p>
+        <div class="space-y-4">
+            <h3 class="text-[10px] text-zinc-500 uppercase font-bold tracking-[0.3em] px-2 flex items-center gap-2">
+                <span class="w-1 h-1 bg-yellow-500 rounded-full animate-ping"></span> 
+                Session Contact Log
+            </h3>
+            <div id="historyLog" class="max-h-64 overflow-y-auto space-y-2 pr-2">
+                <p id="emptyLog" class="text-[9px] text-zinc-800 italic px-2">Awaiting first contact deployment...</p>
             </div>
         </div>
+
     </div>
 
     <script>
@@ -67,7 +80,7 @@
         
         input.addEventListener('input', () => {
             const val = input.value;
-            // REGEX BRAIN: Finds phones and emails in the mess
+            // SMART REGEX: Extract phone and email from the mess
             const phoneMatch = val.match(/(\+?\d{1,4}?[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4})/);
             const emailMatch = val.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
             
@@ -82,22 +95,33 @@
         function setMode(m) {
             currentMode = m;
             ['whatsapp', 'sms', 'email'].forEach(id => {
-                document.getElementById('btn-'+id).style.opacity = (id === m) ? "1" : "0.6";
+                const btn = document.getElementById('btn-'+id);
+                if(id === m) {
+                    btn.classList.add('border-yellow-600/50', 'bg-yellow-950/20', 'text-yellow-500');
+                    btn.classList.remove('border-white/10', 'bg-white/5', 'text-gray-500');
+                    btn.style.opacity = "1";
+                } else {
+                    btn.classList.remove('border-yellow-600/50', 'bg-yellow-950/20', 'text-yellow-500');
+                    btn.classList.add('border-white/10', 'bg-white/5', 'text-gray-500');
+                    btn.style.opacity = "0.6";
+                }
             });
         }
 
         function searchProperty() {
-            // Searches the whole text block on Zillow
-            window.open(`https://www.zillow.com/homes/${encodeURIComponent(extractedData.raw)}`, '_blank');
+            if(!extractedData.raw) return alert("Paste details first");
+            window.open(`https://www.google.com/search?q=zillow+property+at+${encodeURIComponent(extractedData.raw)}`, '_blank');
         }
 
         function searchOwner() {
-            window.open(`https://www.google.com/search?q=owner+of+${encodeURIComponent(extractedData.phone || extractedData.raw)}`, '_blank');
+            if(!extractedData.phone && !extractedData.raw) return alert("No details to search");
+            const query = extractedData.phone || extractedData.raw;
+            window.open(`https://www.google.com/search?q=owner+of+${encodeURIComponent(query)}`, '_blank');
         }
 
         function executeHandshake() {
             let url = "";
-            const msg = encodeURIComponent("Hi, reaching out regarding the property. Is it still available?");
+            const msg = encodeURIComponent("Hi, reaching out regarding the property. Still available?");
             
             if (currentMode === 'whatsapp' && extractedData.phone) {
                 url = `https://wa.me/${extractedData.phone.replace(/\D/g,'')}?text=${msg}`;
@@ -106,21 +130,30 @@
             } else if (currentMode === 'email' && extractedData.email) {
                 url = `mailto:${extractedData.email}?subject=Property Inquiry&body=${msg}`;
             } else {
-                alert("Missing required contact info for this mode!"); return;
+                alert("Missing required contact info!"); return;
             }
 
-            // RECORD THE HISTORY
+            // ADD TO LOG
             const log = document.getElementById('historyLog');
-            if (log.innerHTML.includes("No contacts")) log.innerHTML = "";
+            const empty = document.getElementById('emptyLog');
+            if (empty) empty.remove();
+
             const entry = document.createElement('div');
-            entry.className = "log-entry p-3 rounded-r-xl text-[10px]";
-            entry.innerHTML = `<span class="text-yellow-500 font-bold">${currentMode.toUpperCase()}</span> sent to ${extractedData.phone || extractedData.email} <br> <span class="text-zinc-500">${new Date().toLocaleTimeString()}</span>`;
+            entry.className = "log-entry";
+            entry.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <span class="text-yellow-500 font-black uppercase text-[8px] tracking-widest">${currentMode}</span>
+                    <span class="text-[7px] text-zinc-600 font-mono">${new Date().toLocaleTimeString()}</span>
+                </div>
+                <div class="text-white text-[10px] mt-1 font-mono">${extractedData.phone || extractedData.email}</div>
+            `;
             log.prepend(entry);
 
             window.open(url, '_blank');
         }
     </script>
 </body>
-</html>
-
+    </html>
     
+
+        
