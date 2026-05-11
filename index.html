@@ -2,119 +2,110 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LOGICSTACK | SENTINEL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGICSTACK | SENTINEL V3.2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(212, 175, 55, 0.2); }
-        .gold-text { color: #D4AF37; }
-        .gold-bg { background: #D4AF37; color: #000; }
-        .pulse { animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-        .shimmer { background: linear-gradient(90deg, #000 0%, #111 50%, #000 100%); background-size: 200% 100%; animation: shimmer 3s infinite; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        body { background-color: #050505; color: #e5e5e5; font-family: 'Inter', sans-serif; }
+        .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f9e27d 50%, #b8860b 100%); }
+        .glass-card { background: rgba(20, 20, 20, 0.8); border: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px); }
+        .gold-glow:hover { box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+        .intel-btn { border: 1px solid #3b82f6; color: #3b82f6; }
+        .terminal-text { font-family: 'Courier New', Courier, monospace; }
     </style>
 </head>
-<body class="min-h-screen pb-24">
-
-    <div class="p-6 flex justify-between items-center border-b border-zinc-900 bg-black/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="flex items-center gap-2">
-            <div class="w-2 h-2 gold-bg rounded-full pulse"></div>
-            <span class="text-[10px] tracking-[0.3em] gold-text font-black uppercase">LogicStack Sentinel</span>
-        </div>
-        <button onclick="toggleSettings()" class="text-zinc-500 text-xl">⚙️</button>
-    </div>
-
-    <div class="p-5 max-w-md mx-auto space-y-6">
+<body class="p-4 md:p-8 min-h-screen">
+    <div class="max-w-xl mx-auto space-y-6">
         
-        <div class="glass p-8 rounded-[2rem] relative overflow-hidden shimmer">
-            <div class="absolute -right-10 -top-10 w-32 h-32 bg-[#D4AF37] opacity-10 blur-3xl"></div>
-            <h1 class="text-3xl font-light">Executive <span class="font-bold italic">Vault</span></h1>
-            <p class="text-zinc-500 text-[9px] mt-1 uppercase tracking-widest font-bold">Autonomous Outreach v2.1</p>
-        </div>
-
-        <div class="glass p-6 rounded-[2rem] space-y-4">
-            <div class="flex justify-between items-center px-1">
-                <label class="text-[9px] gold-text uppercase tracking-widest font-black">Lead Input</label>
-                <span class="text-[9px] text-zinc-600 font-bold">ENCRYPTED</span>
-            </div>
-            
-            <input type="text" id="leadInput" placeholder="Enter Phone or Email" 
-                class="w-full bg-zinc-950 border border-zinc-800 p-4 rounded-2xl focus:outline-none focus:border-[#D4AF37] transition-all text-white text-sm">
-            
-            <select id="scriptType" class="w-full bg-zinc-950 border border-zinc-800 p-4 rounded-2xl text-zinc-400 text-[10px] font-bold uppercase tracking-wider focus:outline-none focus:border-[#D4AF37]">
-                <option value="direct">Direct Interest Inquiry</option>
-                <option value="followup">Follow-up Sequence</option>
-                <option value="urgent">Urgent Availability Check</option>
-            </select>
-
-            <button onclick="handleHandshake()" 
-                class="w-full gold-bg font-black py-5 rounded-2xl tracking-[0.2em] text-[10px] active:scale-95 transition-all uppercase shadow-[0_10px_20px_rgba(212,175,55,0.15)]">
-                Initiate Handshake
-            </button>
-        </div>
-
-        <div id="settingsModal" class="hidden glass p-6 rounded-[2rem] space-y-3 animate-in fade-in duration-300">
-            <h3 class="gold-text font-black text-[10px] uppercase tracking-widest mb-2">Vault Configuration</h3>
-            <input type="text" id="bizName" placeholder="Business Name (e.g. LogicStack)" class="w-full bg-zinc-900 border border-zinc-800 p-3 rounded-xl text-xs text-white">
-            <p class="text-[9px] text-zinc-500 px-1 italic">Settings persist locally in your secure vault.</p>
-        </div>
-
-        <div class="p-6 rounded-[2rem] border border-zinc-900 bg-zinc-950/40 flex justify-between items-center opacity-40">
+        <div class="flex justify-between items-center border-b border-yellow-900/30 pb-4">
             <div>
-                <h3 class="text-zinc-300 font-bold text-xs">Seller Verification</h3>
-                <p class="text-zinc-600 text-[9px]">AI Title Authentication</p>
+                <h1 class="text-[10px] tracking-[0.3em] text-yellow-500 font-bold uppercase terminal-text">LogicStack Systems</h1>
+                <p class="text-xl font-light italic text-white">Sentinel <span class="font-bold not-italic">V3.2 Intel</span></p>
             </div>
-            <div class="px-3 py-1 bg-zinc-900 text-[8px] text-zinc-500 rounded-full border border-zinc-800 font-bold uppercase">Locked</div>
+            <div class="px-3 py-1 rounded border border-yellow-600/30 text-[10px] text-yellow-600 font-bold">ENCRYPTED</div>
         </div>
-    </div>
 
-    <div id="overlay" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[100] hidden flex flex-col items-center justify-center p-10 text-center">
-        <div class="w-12 h-12 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin mb-6"></div>
-        <div id="statusText" class="gold-text font-mono text-[10px] tracking-[0.3em] uppercase">Initializing Registry...</div>
+        <div class="glass-card p-5 rounded-2xl space-y-4">
+            <div class="flex justify-between items-center">
+                <label class="text-[9px] uppercase text-yellow-600 font-bold terminal-text">Bulk Target Input</label>
+                <span id="queueCount" class="text-[9px] text-gray-500 font-bold">0 LOADED</span>
+            </div>
+            <textarea id="bulkInput" rows="4" class="w-full bg-black/40 border border-white/5 rounded-xl p-4 text-sm focus:outline-none focus:border-yellow-600 transition-all text-white" placeholder="Paste lead list..."></textarea>
+            
+            <div class="grid grid-cols-3 gap-2">
+                <button onclick="setChannel('whatsapp')" id="btn-whatsapp" class="text-[9px] py-2 rounded-lg border border-yellow-600/50 bg-yellow-950/20 text-yellow-500 font-bold">WHATSAPP</button>
+                <button onclick="setChannel('sms')" id="btn-sms" class="text-[9px] py-2 rounded-lg border border-white/10 bg-white/5 text-gray-500 font-bold opacity-60">SMS</button>
+                <button onclick="setChannel('email')" id="btn-email" class="text-[9px] py-2 rounded-lg border border-white/10 bg-white/5 text-gray-500 font-bold opacity-60">EMAIL</button>
+            </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-3xl text-center space-y-6">
+            <div class="space-y-1">
+                <div id="statusLabel" class="text-[8px] text-yellow-500/40 font-bold uppercase tracking-[0.3em]">Active Identification</div>
+                <div id="currentLeadDisplay" class="text-3xl font-black tracking-tighter text-white py-2 font-mono uppercase">---</div>
+                <div id="queueProgress" class="text-[9px] text-gray-600 font-bold">STANDBY MODE</div>
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="executeHandshake()" class="gold-gradient w-full py-5 rounded-2xl text-black font-black uppercase tracking-[0.2em] text-xs gold-glow transition-all active:scale-95">Initiate Handshake</button>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="researchLead()" class="intel-btn py-3 rounded-xl text-[9px] font-bold uppercase tracking-widest">Deep Intel (Google)</button>
+                    <button onclick="nextLead()" class="bg-white/5 py-3 rounded-xl text-[9px] text-gray-400 font-bold uppercase border border-white/5">Skip Target</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center opacity-20 text-[8px] tracking-[0.4em] uppercase font-bold text-yellow-500">Core Engine V3.2</div>
     </div>
 
     <script>
-        function toggleSettings() {
-            const modal = document.getElementById('settingsModal');
-            modal.classList.toggle('hidden');
+        let leads = []; let currentIndex = 0; let channel = 'whatsapp';
+        const bulkInput = document.getElementById('bulkInput');
+        const leadDisplay = document.getElementById('currentLeadDisplay');
+        const queueProgress = document.getElementById('queueProgress');
+        const queueCount = document.getElementById('queueCount');
+
+        bulkInput.addEventListener('input', () => {
+            leads = bulkInput.value.split(/[\n,]+/).map(l => l.trim()).filter(l => l !== "");
+            currentIndex = 0; updateDisplay();
+        });
+
+        function setChannel(choice) {
+            channel = choice;
+            ['whatsapp', 'sms', 'email'].forEach(c => {
+                const btn = document.getElementById('btn-' + c);
+                btn.style.opacity = (c === choice) ? "1" : "0.6";
+            });
         }
 
-        function handleHandshake() {
-            const lead = document.getElementById('leadInput').value;
-            const biz = document.getElementById('bizName').value || "LogicStack";
-            const type = document.getElementById('scriptType').value;
-            
-            if(!lead) { alert("Access Denied: Enter Lead Contact"); return; }
+        function updateDisplay() {
+            if (leads.length > 0) {
+                leadDisplay.innerText = leads[currentIndex];
+                queueProgress.innerText = `QUEUED: ${currentIndex + 1} OF ${leads.length}`;
+                queueCount.innerText = `${leads.length} LOADED`;
+            } else {
+                leadDisplay.innerText = "---"; queueProgress.innerText = "STANDBY MODE";
+            }
+        }
 
-            const overlay = document.getElementById('overlay');
-            const status = document.getElementById('statusText');
-            overlay.classList.remove('hidden');
+        function nextLead() {
+            if (currentIndex < leads.length - 1) { currentIndex++; updateDisplay(); }
+            else { alert("Queue Complete."); }
+        }
 
-            const messages = {
-                direct: `Hello, this is ${biz}. I'm reaching out regarding the property. Is it still available?`,
-                followup: `Hi, ${biz} here. Just following up on our previous conversation about the deal.`,
-                urgent: `Urgent inquiry from ${biz}. Please confirm if the property is still on the market.`
-            };
+        function researchLead() {
+            const lead = leads[currentIndex];
+            window.open(`https://www.google.com/search?q=%22${lead.replace(/\D/g,'')}%22`, '_blank');
+        }
 
-            const steps = ["Bypassing Latency...", "Authenticating Lead...", "Handshake Secure."];
-            let i = 0;
-            const interval = setInterval(() => {
-                status.innerText = steps[i];
-                i++;
-                if(i >= steps.length) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        const cleanLead = lead.replace(/\D/g, '');
-                        window.location.href = `https://wa.me/${cleanLead}?text=${encodeURIComponent(messages[type])}`;
-                        overlay.classList.add('hidden');
-                    }, 800);
-                }
-            }, 900);
+        function executeHandshake() {
+            const lead = leads[currentIndex];
+            const msg = encodeURIComponent("Hey, reaching out regarding the property. Still available?");
+            let url = (channel === 'whatsapp') ? `https://wa.me/${lead.replace(/\D/g,'')}?text=${msg}` : `sms:${lead.replace(/\D/g,'')}?body=${msg}`;
+            window.open(url, '_blank');
+            setTimeout(nextLead, 1500);
         }
     </script>
 </body>
-              </html>
-
-                                                                                                                 
+        </html>
+    
