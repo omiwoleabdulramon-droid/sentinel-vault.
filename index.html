@@ -3,623 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGICSTACK | SENTINEL V4.2</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>LOGICSTACK | SENTINEL V4.1.1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --gold: #d4af37;
-            --gold-light: #f9e27d;
-            --gold-dark: #b8860b;
-            --bg: #060606;
-            --surface: rgba(18, 18, 18, 0.85);
-            --border: rgba(212, 175, 55, 0.18);
-            --text: #e8e8e8;
-            --muted: #555;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Syne', sans-serif;
-            min-height: 100vh;
-            padding: 20px 16px 100px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Background grid */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(212,175,55,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212,175,55,0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .container {
-            max-width: 480px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .brand-label {
-            font-size: 9px;
-            letter-spacing: 0.35em;
-            color: var(--gold);
-            font-weight: 800;
-            text-transform: uppercase;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .brand-title {
-            font-size: 22px;
-            font-weight: 400;
-            color: white;
-            line-height: 1.1;
-            margin-top: 2px;
-        }
-
-        .brand-title strong {
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .status-badge {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #22c55e;
-            box-shadow: 0 0 8px #22c55e;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        .status-text {
-            font-size: 8px;
-            font-family: 'Space Mono', monospace;
-            color: #22c55e;
-            letter-spacing: 0.2em;
-            font-weight: 700;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 20px;
-            backdrop-filter: blur(12px);
-        }
-
-        /* Input area */
-        .input-label {
-            font-size: 8px;
-            font-family: 'Space Mono', monospace;
-            color: var(--muted);
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        textarea {
-            width: 100%;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            padding: 14px 16px;
-            font-size: 13px;
-            font-family: 'Space Mono', monospace;
-            color: white;
-            resize: none;
-            transition: border-color 0.2s;
-            line-height: 1.6;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: rgba(212,175,55,0.4);
-        }
-
-        textarea::placeholder { color: #333; }
-
-        /* Mode selector */
-        .mode-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 14px;
-        }
-
-        .mode-btn {
-            padding: 10px 6px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03);
-            color: #555;
-            font-size: 8px;
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-transform: uppercase;
-        }
-
-        .mode-btn.active {
-            border-color: var(--gold);
-            background: rgba(212,175,55,0.1);
-            color: var(--gold);
-        }
-
-        /* Detected info */
-        .detect-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .detect-item label {
-            font-size: 7px;
-            font-family: 'Space Mono', monospace;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .detect-value {
-            font-size: 14px;
-            font-family: 'Space Mono', monospace;
-            color: white;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .detect-value.empty { color: #2a2a2a; }
-        .detect-value.filled { color: var(--gold-light); }
-
-        /* Main CTA */
-        .handshake-btn {
-            width: 100%;
-            padding: 18px;
-            border-radius: 16px;
-            border: none;
-            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-light) 100%);
-            color: #000;
-            font-family: 'Syne', sans-serif;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .handshake-btn:active { transform: scale(0.97); }
-
-        .handshake-btn.success {
-            background: linear-gradient(135deg, #14532d, #22c55e);
-            color: white;
-        }
-
-        .handshake-btn::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15) 100%);
-        }
-
-        /* Secondary buttons */
-        .action-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .action-btn {
-            padding: 13px 8px;
-            border-radius: 14px;
-            font-size: 8px;
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid;
-        }
-
-        .action-btn:active { transform: scale(0.97); }
-
-        .btn-blue {
-            border-color: rgba(59,130,246,0.4);
-            background: rgba(59,130,246,0.08);
-            color: #60a5fa;
-        }
-
-        .btn-zinc {
-            border-color: rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.04);
-            color: #666;
-        }
-
-        /* Message preview */
-        .msg-preview {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(212,175,55,0.12);
-            border-radius: 14px;
-            padding: 14px 16px;
-            margin-top: 14px;
-        }
-
-        .msg-preview-label {
-            font-size: 7px;
-            font-family: 'Space Mono', monospace;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .msg-preview-text {
-            font-size: 11px;
-            font-family: 'Space Mono', monospace;
-            color: #aaa;
-            line-height: 1.6;
-        }
-
-        /* Log */
-        .log-header {
-            font-size: 8px;
-            font-family: 'Space Mono', monospace;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            font-weight: 700;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .clear-btn {
-            font-size: 7px;
-            font-family: 'Space Mono', monospace;
-            color: #333;
-            background: none;
-            border: none;
-            cursor: pointer;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            transition: color 0.2s;
-        }
-
-        .clear-btn:hover { color: #666; }
-
-        .log-scroll {
-            max-height: 200px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .log-scroll::-webkit-scrollbar { width: 2px; }
-        .log-scroll::-webkit-scrollbar-track { background: transparent; }
-        .log-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-        .log-entry {
-            border-left: 2px solid var(--gold);
-            background: rgba(255,255,255,0.025);
-            padding: 10px 14px;
-            border-radius: 0 12px 12px 0;
-            animation: slideIn 0.2s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-8px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .log-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 7px;
-            font-family: 'Space Mono', monospace;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 4px;
-        }
-
-        .log-contact {
-            font-size: 11px;
-            font-family: 'Space Mono', monospace;
-            color: var(--gold-light);
-        }
-
-        .log-empty {
-            font-size: 10px;
-            font-family: 'Space Mono', monospace;
-            color: #222;
-            text-align: center;
-            padding: 20px;
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(80px);
-            background: rgba(20,20,20,0.95);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px 20px;
-            font-size: 10px;
-            font-family: 'Space Mono', monospace;
-            color: var(--gold-light);
-            z-index: 100;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            white-space: nowrap;
-        }
-
-        .toast.show { transform: translateX(-50%) translateY(0); }
+        body { background-color: #050505; color: #e5e5e5; font-family: 'Inter', sans-serif; }
+        .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f9e27d 50%, #b8860b 100%); }
+        .glass-card { background: rgba(20, 20, 20, 0.8); border: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px); }
+        .log-entry { border-left: 2px solid #d4af37; background: rgba(255,255,255,0.03); margin-bottom: 8px; padding: 12px; border-radius: 0 12px 12px 0; }
     </style>
 </head>
-<body>
-
-<div class="container">
-
-    <!-- Header -->
-    <div class="header">
-        <div>
-            <div class="brand-label">LogicStack Brain</div>
-            <div class="brand-title">Sentinel <strong>V4.2</strong></div>
-        </div>
-        <div class="status-badge">
-            <div class="status-dot"></div>
-            <div class="status-text">STABLE</div>
-        </div>
-    </div>
-
-    <!-- Input Card -->
-    <div class="card">
-        <div class="input-label">Lead Details</div>
-        <textarea id="rawInput" rows="4" placeholder="Paste lead details — name, phone, email, address..."></textarea>
-        <div class="mode-grid">
-            <button class="mode-btn active" onclick="setMode('whatsapp')" id="btn-whatsapp">WhatsApp</button>
-            <button class="mode-btn" onclick="setMode('sms')" id="btn-sms">SMS</button>
-            <button class="mode-btn" onclick="setMode('email')" id="btn-email">Email</button>
-        </div>
-    </div>
-
-    <!-- Contact + Actions Card -->
-    <div class="card">
-        <div class="detect-grid">
-            <div class="detect-item">
-                <label>Phone</label>
-                <div id="dispPhone" class="detect-value empty">---</div>
+<body class="p-4 pb-24 min-h-screen">
+    <div class="max-w-xl mx-auto space-y-6">
+        
+        <div class="flex justify-between items-center border-b border-yellow-900/30 pb-4">
+            <div>
+                <h1 class="text-[10px] tracking-[0.3em] text-yellow-500 font-bold uppercase">LogicStack Brain</h1>
+                <p class="text-xl font-light italic text-white">Sentinel <span class="font-bold not-italic">V4.1.1</span></p>
             </div>
-            <div class="detect-item">
-                <label>Email</label>
-                <div id="dispEmail" class="detect-value empty" style="font-size:10px;">---</div>
+            <div class="px-3 py-1 rounded border border-yellow-600/30 text-[10px] text-yellow-600 font-bold">STABLE</div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl space-y-4">
+            <textarea id="rawInput" rows="4" class="w-full bg-black/40 border border-white/5 rounded-xl p-4 text-sm focus:outline-none focus:border-yellow-600 text-white" placeholder="Paste lead details..."></textarea>
+            
+            <div class="grid grid-cols-3 gap-2">
+                <button onclick="setMode('whatsapp')" id="btn-whatsapp" class="text-[9px] py-2 rounded-lg border border-yellow-600/50 bg-yellow-950/20 text-yellow-500 font-bold">WHATSAPP</button>
+                <button onclick="setMode('sms')" id="btn-sms" class="text-[9px] py-2 rounded-lg border border-white/10 bg-white/5 text-gray-500 font-bold opacity-60">SMS</button>
+                <button onclick="setMode('email')" id="btn-email" class="text-[9px] py-2 rounded-lg border border-white/10 bg-white/5 text-gray-500 font-bold opacity-60">EMAIL</button>
             </div>
         </div>
 
-        <!-- Message Preview -->
-        <div class="msg-preview">
-            <div class="msg-preview-label">Outreach Message</div>
-            <div id="msgPreview" class="msg-preview-text">Paste lead details to generate message...</div>
+        <div class="glass-card p-6 rounded-3xl space-y-6">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <p class="text-[8px] text-zinc-500 uppercase font-black">Detected Phone</p>
+                    <p id="dispPhone" class="text-lg font-mono text-white">---</p>
+                </div>
+                <div>
+                    <p class="text-[8px] text-zinc-500 uppercase font-black">Detected Email</p>
+                    <p id="dispEmail" class="text-[10px] font-mono text-zinc-300 truncate">---</p>
+                </div>
+            </div>
+
+            <button onclick="executeHandshake()" class="gold-gradient w-full py-5 rounded-2xl text-black font-black uppercase tracking-[0.2em] text-xs shadow-xl active:scale-95 transition-all">
+                Initiate Handshake
+            </button>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="searchGoogle('property')" class="border border-blue-500/50 text-blue-400 py-3 rounded-xl text-[9px] font-bold uppercase">Search Property</button>
+                <button onclick="searchGoogle('owner')" class="border border-zinc-700 text-zinc-500 py-3 rounded-xl text-[9px] font-bold uppercase">Verify Owner</button>
+            </div>
         </div>
 
-        <button onclick="executeHandshake()" id="handshakeBtn" class="handshake-btn" style="margin-top:16px;">
-            ⚡ Initiate Handshake
-        </button>
-
-        <div class="action-grid">
-            <button onclick="searchGoogle('property')" class="action-btn btn-blue">🔍 Search Property</button>
-            <button onclick="searchGoogle('owner')" class="action-btn btn-zinc">👤 Verify Owner</button>
+        <div class="space-y-4">
+            <h3 class="text-[10px] text-zinc-500 uppercase font-bold tracking-[0.3em] px-2">Contact Log</h3>
+            <div id="historyLog" class="max-h-48 overflow-y-auto space-y-2 pr-2"></div>
         </div>
     </div>
 
-    <!-- Log -->
-    <div class="card">
-        <div class="log-header">
-            <span>Contact Log</span>
-            <button class="clear-btn" onclick="clearLog()">Clear all</button>
-        </div>
-        <div id="historyLog" class="log-scroll">
-            <div class="log-empty">No contacts yet</div>
-        </div>
-    </div>
+    <script>
+        let currentMode = 'whatsapp';
+        let extractedData = { phone: '', email: '', raw: '' };
 
-</div>
+        const input = document.getElementById('rawInput');
+        
+        input.addEventListener('input', () => {
+            const val = input.value;
+            const phoneMatch = val.match(/(\+?\d{1,4}?[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4})/);
+            const emailMatch = val.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+            
+            extractedData.phone = phoneMatch ? phoneMatch[0] : '';
+            extractedData.email = emailMatch ? emailMatch[0] : '';
+            extractedData.raw = val;
 
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-
-<script>
-    let currentMode = 'whatsapp';
-    let extractedData = { phone: '', email: '', name: '', address: '', raw: '' };
-
-    const input = document.getElementById('rawInput');
-
-    // ── Extract data from paste ──
-    input.addEventListener('input', () => {
-        const val = input.value;
-        const phoneMatch = val.match(/(\+?\d{1,4}?[\s.\-]?\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4})/);
-        const emailMatch = val.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
-        const nameMatch = val.match(/^([A-Z][a-z]+(?: [A-Z][a-z]+)+)/m);
-        const addressMatch = val.match(/\d+\s+[\w\s]+(?:St|Ave|Blvd|Rd|Dr|Ln|Ct|Way|Pl|Circle|Court|Road|Street|Avenue|Drive)[.,]?\s*[\w\s,]+/i);
-
-        extractedData.phone = phoneMatch ? phoneMatch[0].trim() : '';
-        extractedData.email = emailMatch ? emailMatch[0].trim() : '';
-        extractedData.name = nameMatch ? nameMatch[0].trim() : '';
-        extractedData.address = addressMatch ? addressMatch[0].trim() : '';
-        extractedData.raw = val;
-
-        const phoneEl = document.getElementById('dispPhone');
-        const emailEl = document.getElementById('dispEmail');
-
-        phoneEl.textContent = extractedData.phone || '---';
-        phoneEl.className = 'detect-value ' + (extractedData.phone ? 'filled' : 'empty');
-
-        emailEl.textContent = extractedData.email || '---';
-        emailEl.className = 'detect-value ' + (extractedData.email ? 'filled' : 'empty');
-        emailEl.style.fontSize = extractedData.email ? '10px' : '14px';
-
-        updateMessagePreview();
-    });
-
-    // ── Dynamic message generation ──
-    function generateMessage() {
-        const { name, address, phone, email } = extractedData;
-        const greet = name ? `Hi ${name.split(' ')[0]},` : 'Hi,';
-
-        const templates = [
-            `${greet} I came across your property${address ? ` at ${address}` : ''} and I'm interested in making a cash offer. Are you open to a quick conversation?`,
-            `${greet} I'm a local real estate investor and I noticed your property${address ? ` on ${address}` : ''}. Would you consider a fair cash offer — no agents, no fees?`,
-            `${greet} Reaching out about your property${address ? ` at ${address}` : ''}. We buy homes as-is for cash. Any interest in a no-obligation offer?`
-        ];
-
-        // Pick based on mode
-        const idx = currentMode === 'whatsapp' ? 0 : currentMode === 'sms' ? 1 : 2;
-        return templates[idx];
-    }
-
-    function updateMessagePreview() {
-        const preview = document.getElementById('msgPreview');
-        if (!extractedData.raw.trim()) {
-            preview.textContent = 'Paste lead details to generate message...';
-            return;
-        }
-        preview.textContent = generateMessage();
-    }
-
-    // ── Mode toggle ──
-    function setMode(m) {
-        currentMode = m;
-        ['whatsapp', 'sms', 'email'].forEach(id => {
-            const btn = document.getElementById('btn-' + id);
-            btn.classList.toggle('active', id === m);
+            document.getElementById('dispPhone').innerText = extractedData.phone || "---";
+            document.getElementById('dispEmail').innerText = extractedData.email || "---";
         });
-        updateMessagePreview();
-    }
 
-    // ── Google Search ──
-    function searchGoogle(type) {
-        if (!extractedData.raw && !extractedData.phone) { showToast('Paste lead details first'); return; }
-        let query = '';
-        if (type === 'property') {
-            query = extractedData.address
-                ? `${extractedData.address} property value zillow`
-                : `property ${extractedData.raw.substring(0, 80)}`;
-        } else {
-            query = extractedData.phone
-                ? `who owns phone number ${extractedData.phone}`
-                : `property owner ${extractedData.raw.substring(0, 60)}`;
-        }
-        window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
-    }
-
-    // ── Handshake ──
-    function executeHandshake() {
-        let url = '';
-        const msg = encodeURIComponent(generateMessage());
-        const clean = extractedData.phone.replace(/\D/g, '');
-
-        if (currentMode === 'whatsapp' && clean) url = `https://wa.me/${clean}?text=${msg}`;
-        else if (currentMode === 'sms' && clean) url = `sms:${clean}?body=${msg}`;
-        else if (currentMode === 'email' && extractedData.email) url = `mailto:${extractedData.email}?subject=Property Inquiry&body=${msg}`;
-        else { showToast('Missing contact info!'); return; }
-
-        // Log it
-        addLogEntry();
-
-        // Visual feedback
-        const btn = document.getElementById('handshakeBtn');
-        btn.textContent = '✓ Launched';
-        btn.classList.add('success');
-        setTimeout(() => {
-            btn.textContent = '⚡ Initiate Handshake';
-            btn.classList.remove('success');
-        }, 2500);
-
-        showToast('Handshake initiated ✓');
-        window.open(url, '_blank');
-    }
-
-    // ── Log ──
-    function addLogEntry() {
-        const logs = getLogs();
-        logs.unshift({
-            mode: currentMode,
-            contact: extractedData.phone || extractedData.email,
-            name: extractedData.name || '',
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            date: new Date().toLocaleDateString()
-        });
-        localStorage.setItem('sentinel_logs', JSON.stringify(logs.slice(0, 50)));
-        renderLog();
-    }
-
-    function getLogs() {
-        try { return JSON.parse(localStorage.getItem('sentinel_logs') || '[]'); }
-        catch { return []; }
-    }
-
-    function renderLog() {
-        const container = document.getElementById('historyLog');
-        const logs = getLogs();
-
-        if (!logs.length) {
-            container.innerHTML = '<div class="log-empty">No contacts yet</div>';
-            return;
+        function setMode(m) {
+            currentMode = m;
+            ['whatsapp', 'sms', 'email'].forEach(id => {
+                document.getElementById('btn-'+id).style.opacity = (id === m) ? "1" : "0.6";
+            });
         }
 
-        container.innerHTML = logs.map(l => `
-            <div class="log-entry">
-           
+        // UNIVERSAL GOOGLE SEARCH LOGIC
+        function searchGoogle(type) {
+            if(!extractedData.raw && !extractedData.phone) return alert("Paste details first");
+            
+            let query = "";
+            if (type === 'property') {
+                // Search Google for the address (Zillow will usually be top result)
+                query = `property at ${extractedData.raw}`;
+            } else {
+                // Search Google for the owner/number skip-trace
+                query = `owner of phone number ${extractedData.phone || extractedData.raw}`;
+            }
+            
+            window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+        }
+
+        function executeHandshake() {
+            let url = "";
+            const msg = encodeURIComponent("Hi, reaching out regarding the property. Still available?");
+            
+            if (currentMode === 'whatsapp' && extractedData.phone) url = `https://wa.me/${extractedData.phone.replace(/\D/g,'')}?text=${msg}`;
+            else if (currentMode === 'sms' && extractedData.phone) url = `sms:${extractedData.phone.replace(/\D/g,'')}?body=${msg}`;
+            else if (currentMode === 'email' && extractedData.email) url = `mailto:${extractedData.email}?subject=Inquiry&body=${msg}`;
+            else { alert("Missing contact info!"); return; }
+
+            const log = document.getElementById('historyLog');
+            const entry = document.createElement('div');
+            entry.className = "log-entry";
+            entry.innerHTML = `<div class="flex justify-between uppercase text-[8px]"><span>${currentMode}</span><span>${new Date().toLocaleTimeString()}</span></div><div class="text-white text-[10px] mt-1 font-mono">${extractedData.phone || extractedData.email}</div>`;
+            log.prepend(entry);
+
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+    </html>
